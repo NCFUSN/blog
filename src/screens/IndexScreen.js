@@ -1,20 +1,32 @@
 import React, {useState, useContext} from 'react';
 import { StyleSheet, View, FlatList, Text, Button } from 'react-native';
-import BlogContext from '../context/BlogContext';
+import {Context} from '../context/BlogContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const IndexScreen = () => {
 
-    const { data, addBlogPost } = useContext(BlogContext);
+    const { state, addBlogPost } = useContext(Context);
+
+    const getHeader = () => {
+        return <Button title = 'Add Post' 
+        onPress = {addBlogPost}
+    />
+    };
+
+    const getFooter = () => {
+        return null;
+    };
+
     return (<View>
-        <Button title = 'Add Post' 
-            onPress = {addBlogPost}
-        />
+
         <FlatList 
-            data = {data}
+            data = {state}
             keyExtractor = { blogPost => blogPost.title }
             renderItem = { ({ item }) => {
                 return <Text>{item.title}</Text>
             }}
+            ListHeaderComponent={getHeader}
+            ListFooterComponent={getFooter}
         />
     </View>
     )
